@@ -12,4 +12,6 @@ rm -f /mosquitto/config/passwd
 
 mosquitto_passwd -b -c /mosquitto/config/passwd "$MQTT_USER" "$MQTT_PASSWORD"
 
+chown -R mosquitto:mosquitto /mosquitto/config
+
 exec "$@"
