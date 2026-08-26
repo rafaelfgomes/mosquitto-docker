@@ -8,10 +8,8 @@ fi
 
 echo "Configurando usuário e senha do MQTT..."
 
-rm -f /mosquitto/config/passwd
+rm -f /mosquitto/passwd
 
-mosquitto_passwd -b -c /mosquitto/config/passwd "$MQTT_USER" "$MQTT_PASSWORD"
-
-chown -R mosquitto:mosquitto /mosquitto/config
+mosquitto_passwd -b -c /mosquitto/passwd "$MQTT_USER" "$MQTT_PASSWORD"
 
 exec "$@"
