@@ -1,6 +1,6 @@
 FROM eclipse-mosquitto
 
-COPY ./build/docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./build/entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
