@@ -1,8 +1,8 @@
 services:
   mqtt:
     build:
-      context: .
-      dockerfile: ./build/Dockerfile
+      context: ./build
+      dockerfile: Dockerfile
     container_name: mqtt
     environment:
       - MQTT_USER=${MQTT_USER}

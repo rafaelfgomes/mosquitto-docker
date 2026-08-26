@@ -1,7 +1,7 @@
 services:
   mqtt:
     build:
-      context: .
+      context: ./build
       dockerfile: Dockerfile
     container_name: mqtt
     environment:
