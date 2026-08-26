@@ -6,10 +6,18 @@ if [ -z "$MQTT_USER" ] || [ -z "$MQTT_PASSWORD" ]; then
     exit 1
 fi
 
-echo "Configurando usuário e senha do MQTT..."
+echo "Configurando ambiente do MQTT..."
+
+cp /mosquitto/config/mosquitto.conf /tmp/mosquitto.conf
+
+sed -i 's|^password_file.*|password_file /tmp/passwd|g' /tmp/mosquitto.conf
 
 rm -f /tmp/passwd
 
 mosquitto_passwd -b -c /tmp/passwd "$MQTT_USER" "$MQTT_PASSWORD"
+
+chown 1883:1883 /tmp/mosquitto.conf /tmp/passwd
+
+echo "Inicialização concluída com sucesso. Iniciando o Mosquitto..."
 
 exec "$@"
