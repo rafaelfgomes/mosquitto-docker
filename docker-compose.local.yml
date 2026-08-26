@@ -1,0 +1,27 @@
+services:
+  mqtt:
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+    container_name: mqtt
+    environment:
+      - MQTT_USER=${MQTT_USER}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+    ports:
+      - ${MQTT_UNENCRYPTED_PORT:-1883}:1883
+      - ${MQTT_WEBSOCKET_PORT:-9001}:9001
+    volumes:
+      - ${MOSQUITTO_DATA_FOLDER:-./mosquitto/data}:/mosquitto/data:rw
+      - ${MOSQUITTO_CONFIG_FOLDER:-./mosquitto/config}:/mosquitto/config:rw
+      - ${MOSQUITTO_LOG_FOLDER:-./mosquitto/log}:/mosquitto/log:rw
+    restart: unless-stopped
+    networks:
+      local:
+        ipv4_address: 172.${SUBNET_NUMBER:-20}.0.2
+
+networks:
+  local:
+    ipam:
+      config:
+        - subnet: 172.${SUBNET_NUMBER:-20}.0.0/16
+          gateway: 172.${SUBNET_NUMBER:-20}.0.1

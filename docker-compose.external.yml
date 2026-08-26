@@ -1,0 +1,22 @@
+services:
+  mqtt:
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+    container_name: mqtt
+    environment:
+      - MQTT_USER=${MQTT_USER}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+    volumes:
+      - ${MOSQUITTO_DATA_FOLDER:-./mosquitto/data}:/mosquitto/data:rw
+      - ${MOSQUITTO_CONFIG_FOLDER:-./mosquitto/config}:/mosquitto/config:rw
+      - ${MOSQUITTO_LOG_FOLDER:-./mosquitto/log}:/mosquitto/log:rw
+    restart: unless-stopped
+    networks:
+      external:
+        ipv4_address: ${MQTT_IP}
+
+networks:
+  external:
+    external: true
+    name: ${EXTERNAL_NETWORK_NAME}
