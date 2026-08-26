@@ -8,8 +8,6 @@ fi
 
 echo "Configurando ambiente do MQTT..."
 
-cp /mosquitto/config/mosquitto.conf /tmp/mosquitto.conf
-
 sed -i 's|^password_file.*|password_file /tmp/passwd|g' /tmp/mosquitto.conf
 
 rm -f /tmp/passwd
