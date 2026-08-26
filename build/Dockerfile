@@ -2,7 +2,7 @@ FROM eclipse-mosquitto
 
 COPY entrypoint.sh /docker-entrypoint.sh
 
-COPY mosquitto.conf /mosquitto/config/mosquitto.conf
+COPY mosquitto.conf /tmp/mosquitto.conf
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
