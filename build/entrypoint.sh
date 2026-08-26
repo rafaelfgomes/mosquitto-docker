@@ -16,6 +16,8 @@ mosquitto_passwd -b -c /tmp/passwd "$MQTT_USER" "$MQTT_PASSWORD"
 
 chown 1883:1883 /tmp/mosquitto.conf /tmp/passwd
 
+chown -R 1883:1883 /mosquitto/data /mosquitto/log
+
 echo "Inicialização concluída com sucesso. Iniciando o Mosquitto..."
 
 exec "$@"
