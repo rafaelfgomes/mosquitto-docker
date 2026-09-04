@@ -1,16 +1,12 @@
 services:
   mqtt:
-    build:
-      context: ./build
-      dockerfile: Dockerfile
+    image: eclipse-mosquitto
     container_name: mqtt
-    environment:
-      - MQTT_USER=${MQTT_USER}
-      - MQTT_PASSWORD=${MQTT_PASSWORD}
     volumes:
       - ${MOSQUITTO_DATA_FOLDER:-./mosquitto/data}:/mosquitto/data:rw
       - ${MOSQUITTO_CONFIG_FOLDER:-./mosquitto/config}:/mosquitto/config:rw
       - ${MOSQUITTO_LOG_FOLDER:-./mosquitto/log}:/mosquitto/log:rw
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     restart: unless-stopped
     networks:
       external:

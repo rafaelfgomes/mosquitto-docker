@@ -1,12 +1,7 @@
 services:
   mqtt:
-    build:
-      context: ./build
-      dockerfile: Dockerfile
+    image: eclipse-mosquitto
     container_name: mqtt
-    environment:
-      - MQTT_USER=${MQTT_USER}
-      - MQTT_PASSWORD=${MQTT_PASSWORD}
     ports:
       - ${MQTT_UNENCRYPTED_PORT:-1883}:1883
       - ${MQTT_WEBSOCKET_PORT:-9001}:9001
@@ -14,6 +9,7 @@ services:
       - ${MOSQUITTO_DATA_FOLDER:-./mosquitto/data}:/mosquitto/data:rw
       - ${MOSQUITTO_CONFIG_FOLDER:-./mosquitto/config}:/mosquitto/config:rw
       - ${MOSQUITTO_LOG_FOLDER:-./mosquitto/log}:/mosquitto/log:rw
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     restart: unless-stopped
     networks:
       local:
@@ -21,7 +17,7 @@ services:
 
 networks:
   local:
+    name: mqtt-local-network
     ipam:
       config:
         - subnet: 172.${SUBNET_NUMBER:-20}.0.0/16
-          gateway: 172.${SUBNET_NUMBER:-20}.0.1
